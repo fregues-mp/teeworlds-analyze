@@ -1,3 +1,3 @@
 @echo off
-node bot.js
+node src\bot.js
 pause

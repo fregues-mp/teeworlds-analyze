@@ -1,3 +1,3 @@
 @echo off
-node src\bot.js
+node src\map-analyze\bot.js
 pause

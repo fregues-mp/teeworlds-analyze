@@ -1,5 +1,5 @@
 const teeworlds = require('teeworlds');
-const { logMessage } = require('./logger');
+const { logMessage } = require('../logger');
 
 let client = new teeworlds.Client("26.200.146.224", 8303, "name", {
     identity: {
@@ -13,6 +13,8 @@ let client = new teeworlds.Client("26.200.146.224", 8303, "name", {
     }
 });
 
+let previousMap = null;
+
 client.connect().catch((error) => {
     console.error("Failed to connect:", error);
     logMessage(`Failed to connect: ${error.message}`);
@@ -25,19 +27,25 @@ client.on("connected", async () => {
     client.game.SetTeam(-1);
 });
 
-client.on("message", async (message) => {
-    console.log("Message from server:", message); 
-    await logMessage(`Message from server: ${JSON.stringify(message)}`);
+client.on("map_details", (message) => {
+    previousMap = message.map_name;
+    console.log("map:", previousMap);
 });
 
-client.on("kill", async (message) => {
-    console.log("Kill event:", message);
-    await logMessage(`Kill event: ${JSON.stringify(message)}`);
+client.on("map_details", (message) => {
+    const currentMap = message.map_name;
+
+    if (currentMap !== previousMap) {
+        console.log("Map changed to:", currentMap);
+        logMessage(`Map changed to: ${currentMap}`);
+        previousMap = currentMap;
+    }
 });
 
-client.on("disconnect", async (message) => {
-    console.log("Disconnected: ", message);
-    await logMessage(`Disconnected: ${JSON.stringify(message)}`);
+
+client.on("disconnect", async (reason) => {
+    console.log("Disconnected: " + reason);
+    await logMessage(`Disconnected: ${reason}`);
 });
 
 process.stdin.on("data", async (data) => {

@@ -3,7 +3,7 @@ const { logMessage } = require('../logger');
 
 let client = new teeworlds.Client("26.200.146.224", 8303, "name", {
     identity: {
-        "name": "πeis bot",
+        "name": "πeis map bot",
         "clan": "πeis ∲",
         "skin": "santa_psychowolfe'",
         "use_custom_color": 1,

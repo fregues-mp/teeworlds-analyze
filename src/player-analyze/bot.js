@@ -41,13 +41,15 @@ function setupEventListeners(client) {
         const joinMatch = msg.message.match(/'(.+?)' entered and joined the game/);
         if (joinMatch) {
             const playerName = joinMatch[1];
-            console.log(`Player entered: ${playerName} from ${ip}:${port} ${serverName}`);
-            logMessage(`Player Name: ${playerName} from ${ip}:${port} ${serverName}`);
+            console.log(`Player entered: "${playerName}" from ${ip}:${port} ${serverName}`);
+            logMessage(`Player entered, Name: "${playerName}" from ${ip}:${port} ${serverName}`);
         }
    
-        if (msg.message.toLowerCase().includes("analyze-bot")) {
+        if (msg.message.toLowerCase().includes("player-analyze")) {
             const playerName = msg.author?.ClientInfo?.name;
             const autoReplyMessage = `/w ${playerName} Hi, I'm analyzing some game data, for more information check out my Github: https://github.com/fregues-mp/teeworlds-analyze`;
+            console.log(`Replied to "${playerName}" from ${ip}:${port} ${serverName}`);
+            logMessage(`Replied to "${playerName}"`);
             client.game.Say(autoReplyMessage);
         }
     });

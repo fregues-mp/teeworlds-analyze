@@ -14,7 +14,7 @@ Teeworlds Analyze is a bot designed to monitor and analyze events on Teeworlds g
    ```
 3. Install the dependencies:
    ```bash
-   npm install teeworlds
+   npm i
    ```
 
 ### Usage
@@ -22,7 +22,6 @@ To start the bot, execute:
 ```bash
 node src/map-analyze/bot.js
 ```
-Or run: `run_bot.bat`
 
 #### map-analize
 

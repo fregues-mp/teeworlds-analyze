@@ -14,7 +14,7 @@ let clients = [];
 function createClient() {
     const client = new teeworlds.Client(ip, port, "name", {
         identity: {
-            "name": "πeis map bot",
+            "name": "analyze-bot",
             "clan": "πeis ∲",
             "skin": "santa_psychowolfe'",
             "use_custom_color": 1,
@@ -34,8 +34,7 @@ let isShuttingDown = false;
 function setupEventListeners(client) {
     client.on("connected", async () => {
         if (!isConnected) {
-            console.log(`Connected: ${ip}:${port}`);
-            await logMessage(`Connected: ${ip}:${port}`);
+            console.log(`Connected: ${ip}:${port} ${serverName}`);
             isConnected = true;
         }
         client.game.SetTeam(-1);
@@ -45,34 +44,31 @@ function setupEventListeners(client) {
         const currentMap = message.map_name;
 
         if (currentMap && currentMap !== previousMap) {
-            console.log(`Map changed to: ${currentMap} on ${ip}:${port}`);
-            await logMessage(`Map changed to: ${currentMap}`);
+            console.log(`Map changed to: ${currentMap} on ${ip}:${port} ${serverName}`);
+            await logMessage(`Map: ${currentMap}`);
             previousMap = currentMap;
         }
     });
 
     client.on("disconnect", async (reason) => {
-        console.log(`Disconnected: ${reason} from ${ip}:${port}`);
-        await logMessage(`Disconnected: ${reason}`);
+        console.log(`Disconnected: ${reason} from ${ip}:${port} ${serverName}`);
         isConnected = false;
         
         if (!isShuttingDown) {
-            setTimeout(reconnect(client), reconnectInterval);
+            setTimeout(() => reconnect(client), reconnectInterval);
         }
     });
 }
 
 async function reconnect(client) {
     client.removeAllListeners();
-    console.log(`Attempting to reconnect... ${ip}:${port}`);
+    console.log(`Attempting to reconnect... ${ip}:${port} ${serverName}`);
     await connectClient(client);
 }
 
 async function connectClient(client) {
     try {
         await client.connect();
-        console.log(`Connected: ${ip}:${port}`);
-        await logMessage(`New: ${ip}:${port}`);
     } catch (error) {
         console.error(`Failed to connect: ${error.message}`);
         setTimeout(() => reconnect(client), reconnectInterval);
@@ -80,25 +76,37 @@ async function connectClient(client) {
 }
 
 process.on("SIGINT", async () => {
-    console.log(`Shutting down bot... ${ip}:${port}`);
+    console.log(`Shutting down bot... ${ip}:${port} ${serverName}`);
     isShuttingDown = true;
 
-    for (const client of clients) {
-        try {
-            if (client && typeof client.Disconnect === 'function') {
-                await client.Disconnect();
-                console.log(`Disconnected from ${ip}:${port}`);
-            }
-        } catch (error) {
-            console.error(`Error during disconnection: ${error.message}`);
-        }
-    }
+    const maxAttempts = 5;
+    let attempts = 0;
 
-    setTimeout(() => {
-        console.log("Bot has been shut down.");
-        process.exit(0);
-    }, 1000);
+    const disconnectClients = async () => {
+        for (const client of clients) {
+            try {
+                if (client && typeof client.Disconnect === 'function') {
+                    await client.Disconnect();
+                    console.log(`Disconnected from ${ip}:${port} ${serverName}`);
+                }
+            } catch (error) {
+                console.error(`Error during disconnection: ${error.message}`);
+            }
+        }
+
+        attempts++;
+
+        if (attempts < maxAttempts) {
+            setTimeout(disconnectClients, 2000);
+        } else {
+            console.log("Bot has been shut down.");
+            process.exit(0);
+        }
+    };
+
+    disconnectClients();
 });
+
 
 createClient();
 connectClient(clients[clients.length - 1]);

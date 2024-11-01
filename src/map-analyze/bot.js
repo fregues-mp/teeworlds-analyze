@@ -27,14 +27,14 @@ function createClient() {
     setupEventListeners();
 }
 
-let isConnected = false; // Variável para rastrear se o bot está conectado
+let isConnected = false;
 
 function setupEventListeners() {
     client.on("connected", async () => {
-        if (!isConnected) { // Verifica se já está conectado
+        if (!isConnected) {
             console.log(`Connected: ${ip}:${port}`);
             await logMessage(`Connected: ${ip}:${port}`);
-            isConnected = true; // Atualiza o estado para conectado
+            isConnected = true;
         }
         client.game.SetTeam(-1);
     });
@@ -52,7 +52,7 @@ function setupEventListeners() {
     client.on("disconnect", async (reason) => {
         console.log(`Disconnected: ${reason} from ${ip}:${port}`);
         await logMessage(`Disconnected: ${reason}`);
-        isConnected = false; // Atualiza o estado para desconectado
+        isConnected = false;
         setTimeout(reconnect, reconnectInterval);
     });
 }
@@ -77,13 +77,13 @@ async function connectClient() {
 process.on("SIGINT", async () => {
     console.log(`Shutting down bot... ${ip}:${port}`);
     if (client && typeof client.Disconnect === 'function') {
-        await client.Disconnect(); // Tente desconectar corretamente
+        await client.Disconnect();
     }
-    // Adicione um tempo limite para aguardar o término
+    
     setTimeout(() => {
         console.log("Bot has been shut down.");
         process.exit(0);
-    }, 1000); // Aguarde 1 segundo antes de forçar a saída
+    }, 1000);
 });
 
 

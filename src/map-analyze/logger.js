@@ -4,9 +4,9 @@ const path = require('path');
 let logFilePath = null;
 
 function initializeLogger(serverName, ip, port) {
-    const logsDir = path.join(__dirname, 'logs', serverName); // Cria pasta para cada servidor
+    const logsDir = path.join(__dirname, 'logs', serverName);
     if (!fs.existsSync(logsDir)) {
-        fs.mkdirSync(logsDir, { recursive: true }); // Cria a pasta se não existir
+        fs.mkdirSync(logsDir, { recursive: true });
     }
     const logFileName = `log-${ip}-${port}.txt`;
     logFilePath = path.join(logsDir, logFileName);

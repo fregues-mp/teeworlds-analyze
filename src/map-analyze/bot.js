@@ -14,9 +14,9 @@ let clients = [];
 function createClient() {
     const client = new teeworlds.Client(ip, port, "name", {
         identity: {
-            "name": "analyze-bot",
+            "name": "map-analyze",
             "clan": "πeis ∲",
-            "skin": "santa_psychowolfe'",
+            "skin": "santa_psychowolfe",
             "use_custom_color": 1,
             "color_body": 13631488,
             "color_feet": 14090240,
@@ -47,9 +47,8 @@ function setupEventListeners(client) {
         }
     });
 
-    client.on("message", (msg) => {/*
-        console.log(msg.author?.ClientInfo?.name, msg.message);
-    */
+    client.on("message", (msg) => {
+   
         if (msg.message.toLowerCase().includes("analyze-bot")) {
             const playerName = msg.author?.ClientInfo?.name;
             const autoReplyMessage = `/w ${playerName} Hi, I'm analyzing some game data, for more information check out my Github: https://github.com/fregues-mp/teeworlds-analyze`;

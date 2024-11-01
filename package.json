@@ -1,16 +1,16 @@
 {
-  "dependencies": {
-    "teeworlds": "^2.5.4"
-  },
   "name": "teeworlds-analyze",
-  "description": "Teeworlds Analyze is a bot designed to monitor and analyze events on Teeworlds game servers. It utilizes a specific module from Teeworlds to facilitate connections and custom commands, allowing the collection of relevant data during gameplay.",
   "version": "1.0.0",
+  "description": "Teeworlds Analyze is a bot designed to monitor and analyze events on Teeworlds game servers. It utilizes a specific module from Teeworlds to facilitate connections and custom commands, allowing the collection of relevant data during gameplay.",
   "main": "index.js",
-  "devDependencies": {},
+  "author": "fregues-mp",
+  "license": "EPL-2.0",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "fregues-mp",
-  "license": "ISC"
+  "dependencies": {
+    "teeworlds": "^2.5.4"
+  },
+  "devDependencies": {},
+  "keywords": []
 }

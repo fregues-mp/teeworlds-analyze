@@ -1,3 +1,3 @@
 @echo off
-node src\map-analyze\bot.js
+node src\map-analyze\multbot.js
 pause

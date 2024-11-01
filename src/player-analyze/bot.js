@@ -41,8 +41,8 @@ function setupEventListeners(client) {
         const joinMatch = msg.message.match(/'(.+?)' entered and joined the game/);
         if (joinMatch) {
             const playerName = joinMatch[1];
-            console.log("Player entered:", playerName);
-            logMessage(`Player Name: ${playerName}`);
+            console.log(`Player entered: ${playerName} from ${ip}:${port} ${serverName}`);
+            logMessage(`Player Name: ${playerName} from ${ip}:${port} ${serverName}`);
         }
    
         if (msg.message.toLowerCase().includes("analyze-bot")) {

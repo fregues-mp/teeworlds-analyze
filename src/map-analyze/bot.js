@@ -52,7 +52,7 @@ function setupEventListeners() {
         console.log("Disconnected: " + reason);
         await logMessage(`Disconnected: ${reason}`);
         setTimeout(() => {
-            console.log("Attempting to reconnect...");
+            console.log(`Attempting to reconnect... ${ip}:${port}`);
             reconnect();
         }, reconnectInterval);
     });

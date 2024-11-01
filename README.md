@@ -24,6 +24,10 @@ node src/map-analyze/bot.js
 ```
 Or run: `run_bot.bat`
 
+#### map-analize
+
+- stores maps played on the server
+
 ### Contribution
 
 ![logo_small](https://github.com/user-attachments/assets/3a29afa3-0b39-43ee-9760-cca03d978e62)

@@ -2,7 +2,7 @@ const { fork } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
-const configPath = path.join(__dirname, 'test.json');
+const configPath = path.join(__dirname, '../servers/test.json');
 const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
 
 function startBot(server) {

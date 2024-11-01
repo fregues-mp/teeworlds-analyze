@@ -47,9 +47,9 @@ function setupEventListeners(client) {
         }
     });
 
-    client.on("message", (msg) => {
+    client.on("message", (msg) => {/*
         console.log(msg.author?.ClientInfo?.name, msg.message);
-    
+    */
         if (msg.message.toLowerCase().includes("analyze-bot")) {
             const playerName = msg.author?.ClientInfo?.name;
             const autoReplyMessage = `Hi ${playerName}, I'm analyzing the game maps, check out my repository on Github: https://github.com/fregues-mp/teeworlds-analyze`;

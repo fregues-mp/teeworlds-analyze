@@ -33,10 +33,7 @@ let isShuttingDown = false;
 
 function setupEventListeners(client) {
     client.on("connected", async () => {
-        if (!isConnected) {
-            console.log(`Connected: ${ip}:${port} ${serverName}`);
-            isConnected = true;
-        }
+        isConnected = true;
         client.game.SetTeam(-1);
     });
 
@@ -55,7 +52,7 @@ function setupEventListeners(client) {
     
         if (msg.message.toLowerCase().includes("analyze-bot")) {
             const playerName = msg.author?.ClientInfo?.name;
-            const autoReplyMessage = `Hi @${playerName}, I'm analyzing the game maps, check out my repository on Github: https://github.com/fregues-mp/teeworlds-analyze`;
+            const autoReplyMessage = `Hi ${playerName}, I'm analyzing the game maps, check out my repository on Github: https://github.com/fregues-mp/teeworlds-analyze`;
             client.game.Say(autoReplyMessage);
         }
     });

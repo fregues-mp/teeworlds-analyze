@@ -1,34 +1,35 @@
 const teeworlds = require('teeworlds');
-const { logMessage } = require('../logger');
+const { initializeLogger, logMessage } = require('./logger');
 
-let client;
 let previousMap = null;
 const reconnectInterval = 5000;
-const ip = 26.200.146.224;
+const ip = "26.200.146.224";
 const port = 8303;
 
-function createClient() {
-    client = new teeworlds.Client(ip, port, "name", {
-        identity: {
-            "name": "πeis map bot",
-            "clan": "πeis ∲",
-            "skin": "santa_psychowolfe'",
-            "use_custom_color": 1,
-            "color_body": 13631488,
-            "color_feet": 14090240,
-            "country": -1,
-        }
-    });
+initializeLogger(ip, port); // Inicializa o logger com IP e Porta
 
-    setupEventListeners();
-}
 
-function connectClient() {
-    client.connect().catch((error) => {
+let client = new teeworlds.Client(ip, port, "name", {
+    identity: {
+        "name": "πeis map bot",
+        "clan": "πeis ∲",
+        "skin": "santa_psychowolfe",
+        "use_custom_color": 1,
+        "color_body": 13631488,
+        "color_feet": 14090240,
+        "country": -1,
+    }
+});
+
+async function connectClient() {
+    try {
+        await client.connect();
+        console.log("Connected!");
+        await logMessage("Connected");
+    } catch (error) {
         console.error("Failed to connect:", error);
-        logMessage(`Failed to connect: ${error.message}`);
-        setTimeout(connectClient, reconnectInterval);
-    });
+        await logMessage(`Failed to connect: ${error.message}`);
+    }
 }
 
 function setupEventListeners() {
@@ -59,7 +60,6 @@ function setupEventListeners() {
 }
 
 function reconnect() {
-    createClient();
     connectClient();
 }
 
@@ -75,5 +75,5 @@ process.stdin.on("data", async (data) => {
     }
 });
 
-createClient();
+setupEventListeners();
 connectClient();

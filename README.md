@@ -18,14 +18,14 @@ Teeworlds Analyze is a bot designed to monitor and analyze events on Teeworlds g
    ```
 
 ### Usage
-To start the bot, execute:
-```bash
-node src/map-analyze/bot.js
-```
 
-#### map-analize
+#### map-analyze
 
-- stores maps played on the server
+- whenever the server changes the map, it stores the new map
+
+#### player-analyze
+
+- whenever a player joins the server, it stores the player data
 
 ### Contribution
 

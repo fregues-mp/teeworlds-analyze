@@ -17,16 +17,6 @@ Teeworlds Analyze is a bot designed to monitor and analyze events on Teeworlds g
    npm i
    ```
 
-### Usage
-
-#### map-analyze
-
-- whenever the server changes the map, it stores the new map
-
-#### player-analyze
-
-- whenever a player joins the server, it stores the player data
-
 ### Contribution
 
 ![logo_small](https://github.com/user-attachments/assets/3a29afa3-0b39-43ee-9760-cca03d978e62)

@@ -1,5 +1,5 @@
 const teeworlds = require('teeworlds');
-const { logMessage } = require('../src/logger');
+const { logMessage } = require('../src/map-analyze/logger');
 
 let client = new teeworlds.Client("26.200.146.224", 8303, "name", {
     identity: {

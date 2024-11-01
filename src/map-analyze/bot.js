@@ -9,10 +9,10 @@ initializeLogger(serverName, ip, port);
 
 let previousMap = null;
 const reconnectInterval = 5000;
-let client;
+let clients = [];
 
 function createClient() {
-    client = new teeworlds.Client(ip, port, "name", {
+    const client = new teeworlds.Client(ip, port, "name", {
         identity: {
             "name": "πeis map bot",
             "clan": "πeis ∲",
@@ -24,13 +24,14 @@ function createClient() {
         }
     });
 
-    setupEventListeners();
+    clients.push(client);
+    setupEventListeners(client);
 }
 
-let isShuttingDown = false;
 let isConnected = false;
+let isShuttingDown = false;
 
-function setupEventListeners() {
+function setupEventListeners(client) {
     client.on("connected", async () => {
         if (!isConnected) {
             console.log(`Connected: ${ip}:${port}`);
@@ -54,39 +55,43 @@ function setupEventListeners() {
         console.log(`Disconnected: ${reason} from ${ip}:${port}`);
         await logMessage(`Disconnected: ${reason}`);
         isConnected = false;
-        setTimeout(reconnect, reconnectInterval);
+        
+        if (!isShuttingDown) {
+            setTimeout(reconnect(client), reconnectInterval);
+        }
     });
 }
 
-async function reconnect() {
-    if (isShuttingDown) return;
+async function reconnect(client) {
     client.removeAllListeners();
     console.log(`Attempting to reconnect... ${ip}:${port}`);
-    await connectClient();
+    await connectClient(client);
 }
 
-async function connectClient() {
-    if (isShuttingDown) return;
+async function connectClient(client) {
     try {
         await client.connect();
         console.log(`Connected: ${ip}:${port}`);
         await logMessage(`New: ${ip}:${port}`);
     } catch (error) {
         console.error(`Failed to connect: ${error.message}`);
-        setTimeout(reconnect, reconnectInterval);
+        setTimeout(() => reconnect(client), reconnectInterval);
     }
 }
 
 process.on("SIGINT", async () => {
     console.log(`Shutting down bot... ${ip}:${port}`);
     isShuttingDown = true;
-    try {
-        if (client && typeof client.Disconnect === 'function') {
-            await client.Disconnect();
-            console.log(`Disconnected from ${ip}:${port}`);
+
+    for (const client of clients) {
+        try {
+            if (client && typeof client.Disconnect === 'function') {
+                await client.Disconnect();
+                console.log(`Disconnected from ${ip}:${port}`);
+            }
+        } catch (error) {
+            console.error(`Error during disconnection: ${error.message}`);
         }
-    } catch (error) {
-        console.error(`Error during disconnection: ${error.message}`);
     }
 
     setTimeout(() => {
@@ -95,7 +100,5 @@ process.on("SIGINT", async () => {
     }, 1000);
 });
 
-
-
 createClient();
-connectClient();
+connectClient(clients[clients.length - 1]);

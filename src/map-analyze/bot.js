@@ -52,7 +52,7 @@ function setupEventListeners(client) {
     */
         if (msg.message.toLowerCase().includes("analyze-bot")) {
             const playerName = msg.author?.ClientInfo?.name;
-            const autoReplyMessage = `Hi ${playerName}, I'm analyzing some game data, for more information check out my Github: https://github.com/fregues-mp/teeworlds-analyze`;
+            const autoReplyMessage = `/w ${playerName} Hi, I'm analyzing some game data, for more information check out my Github: https://github.com/fregues-mp/teeworlds-analyze`;
             client.game.Say(autoReplyMessage);
         }
     });

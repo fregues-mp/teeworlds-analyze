@@ -16,7 +16,7 @@ function createClient() {
         identity: {
             "name": "map-analyze",
             "clan": "πeis ∲",
-            "skin": "santa_psychowolfe",
+            "skin": "PsychoWolfe",
             "use_custom_color": 1,
             "color_body": 13631488,
             "color_feet": 14090240,
@@ -42,16 +42,18 @@ function setupEventListeners(client) {
 
         if (currentMap && currentMap !== previousMap) {
             console.log(`Map changed to: ${currentMap} on ${ip}:${port} ${serverName}`);
-            await logMessage(`Map: ${currentMap}`);
+            await logMessage(`Map: "${currentMap}"`);
             previousMap = currentMap;
         }
     });
 
     client.on("message", (msg) => {
    
-        if (msg.message.toLowerCase().includes("analyze-bot")) {
+        if (msg.message.toLowerCase().includes("map-analyze")) {
             const playerName = msg.author?.ClientInfo?.name;
             const autoReplyMessage = `/w ${playerName} Hi, I'm analyzing some game data, for more information check out my Github: https://github.com/fregues-mp/teeworlds-analyze`;
+            console.log(`Replied to "${playerName}" from ${ip}:${port} ${serverName}`);
+            logMessage(`Replied to "${playerName}"`);
             client.game.Say(autoReplyMessage);
         }
     });

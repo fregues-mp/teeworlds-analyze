@@ -2,11 +2,9 @@ const { fork } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
-// Lê o arquivo de configuração
-const configPath = path.join(__dirname, 'config.json');
+const configPath = path.join(__dirname, 'servers.json');
 const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
 
-// Função para iniciar um bot em um IP e porta específicos
 function startBot(ip, port) {
     const botScript = path.join(__dirname, 'bot.js');
     const botProcess = fork(botScript, [ip, port]);
@@ -20,7 +18,6 @@ function startBot(ip, port) {
     });
 }
 
-// Loop para iniciar o bot para cada IP e porta no arquivo de configuração
 config.servers.forEach(server => {
     server.ports.forEach(port => {
         startBot(server.ip, port);

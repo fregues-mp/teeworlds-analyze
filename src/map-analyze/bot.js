@@ -27,6 +27,7 @@ function createClient() {
     setupEventListeners();
 }
 
+let isShuttingDown = false;
 let isConnected = false;
 
 function setupEventListeners() {
@@ -58,12 +59,14 @@ function setupEventListeners() {
 }
 
 async function reconnect() {
+    if (isShuttingDown) return;
     client.removeAllListeners();
     console.log(`Attempting to reconnect... ${ip}:${port}`);
     await connectClient();
 }
 
 async function connectClient() {
+    if (isShuttingDown) return;
     try {
         await client.connect();
         console.log(`Connected: ${ip}:${port}`);
@@ -76,15 +79,22 @@ async function connectClient() {
 
 process.on("SIGINT", async () => {
     console.log(`Shutting down bot... ${ip}:${port}`);
-    if (client && typeof client.Disconnect === 'function') {
-        await client.Disconnect();
+    isShuttingDown = true;
+    try {
+        if (client && typeof client.Disconnect === 'function') {
+            await client.Disconnect();
+            console.log(`Disconnected from ${ip}:${port}`);
+        }
+    } catch (error) {
+        console.error(`Error during disconnection: ${error.message}`);
     }
-    
+
     setTimeout(() => {
         console.log("Bot has been shut down.");
         process.exit(0);
     }, 1000);
 });
+
 
 
 createClient();

@@ -1,25 +1,26 @@
 const teeworlds = require('teeworlds');
-const { initializeLogger, logMessage } = require('./logger');
+const { initializeLogger, logMessage } = require('../logger');
 
 let previousMap = null;
 const reconnectInterval = 5000;
-const ip = "26.200.146.224";
-const port = 8303;
+const ip = process.argv[2];
+const port = parseInt(process.argv[3], 10);
 
-initializeLogger(ip, port); // Inicializa o logger com IP e Porta
+initializeLogger(ip, port);
 
 
 let client = new teeworlds.Client(ip, port, "name", {
     identity: {
         "name": "πeis map bot",
         "clan": "πeis ∲",
-        "skin": "santa_psychowolfe",
+        "skin": "santa_psychowolfe'",
         "use_custom_color": 1,
         "color_body": 13631488,
         "color_feet": 14090240,
         "country": -1,
     }
 });
+
 
 async function connectClient() {
     try {

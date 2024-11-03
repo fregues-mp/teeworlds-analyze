@@ -1,4 +1,5 @@
 const teeworlds = require('teeworlds');
+const config = require('../.../config/bot-identify.json');
 const { initializeLogger, logMessage } = require('./logger');
 
 const ip = process.argv[2];
@@ -14,13 +15,13 @@ let clients = [];
 function createClient() {
     const client = new teeworlds.Client(ip, port, "name", {
         identity: {
-            "name": "all-analyze",
-            "clan": "πeis ∲",
-            "skin": "PsychoWolfe",
-            "use_custom_color": 1,
-            "color_body": 13631488,
-            "color_feet": 14090240,
-            "country": -1,
+            "name": config["all-analyze"].name,
+            "clan": config["all-analyze"].clan,
+            "skin": config["all-analyze"].skin,
+            "use_custom_color": config["all-analyze"].use_custom_color,
+            "color_body": config["all-analyze"].color_body,
+            "color_feet": config["all-analyze"].color_feet,
+            "country": config["all-analyze"].country,
         }
     });
 
@@ -73,7 +74,7 @@ function setupEventListeners(client) {
     });
     
     client.on("disconnect", async (reason) => {
-        console.log(`Disconnected: ${reason} from ${ip}:${port} ${serverName}`);
+//        console.log(`Disconnected: ${reason} from ${ip}:${port} ${serverName}`);
         isConnected = false;
         
         if (!isShuttingDown) {
@@ -84,7 +85,7 @@ function setupEventListeners(client) {
 
 
 async function reconnect(client) {
-    console.log(`Attempting to reconnect... ${ip}:${port} ${serverName}`);
+//    console.log(`Attempting to reconnect... ${ip}:${port} ${serverName}`);
     await connectClient(client);
 }
 
@@ -92,7 +93,7 @@ async function connectClient(client) {
     try {
         await client.connect();
     } catch (error) {
-        console.error(`Failed to connect: ${error.message}`);
+//        console.error(`Failed to connect: ${error.message}`);
         setTimeout(() => reconnect(client), reconnectInterval);
     }
 }

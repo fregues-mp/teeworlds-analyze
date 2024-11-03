@@ -26,5 +26,5 @@ Teeworlds Analyze is a bot designed to monitor and analyze events on Teeworlds g
 
 Feel free to contribute! Open an *issue* or submit a *pull request*.
 
-### License
-This project is licensed under the ![GitHub License](https://img.shields.io/github/license/fregues-mp/teeworlds-analyze)
+
+![GitHub License](https://img.shields.io/github/license/fregues-mp/teeworlds-analyze)

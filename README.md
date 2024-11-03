@@ -2,8 +2,7 @@
 
 Teeworlds Analyze is a bot designed to monitor and analyze events on Teeworlds game servers. It utilizes a specific module from Teeworlds to facilitate connections and custom commands, allowing the collection of relevant data during gameplay.
 
-[![Github Open Issues](https://img.shields.io/github/issues/fregues-mp/teeworlds-analyze.svg)](https://github.com/fregues-mp/teeworlds-analyze/issues)
-[![Github All Releases](https://img.shields.io/github/downloads/fregues-mp/teeworlds-analyze/total.svg)](https://github.com/fregues-mp/teeworlds-analyze/releases)
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/fregues-mp/teeworlds-analyze/total)
 
 ### Installation
 1. Clone the repository:

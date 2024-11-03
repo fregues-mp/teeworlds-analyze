@@ -1,5 +1,5 @@
 const teeworlds = require('teeworlds');
-const config = require('../.../config/bot-identify.json');
+const config = require('../../config/bot-identify.json');
 const { initializeLogger, logMessage } = require('./logger');
 
 const ip = process.argv[2];

@@ -1,4 +1,5 @@
 const teeworlds = require('teeworlds');
+const config = require('../.../config/bot-identify.json');
 const { initializeLogger, logMessage } = require('./logger');
 
 const ip = process.argv[2];
@@ -14,13 +15,13 @@ let clients = [];
 function createClient() {
     const client = new teeworlds.Client(ip, port, "name", {
         identity: {
-            "name": "message-analyze",
-            "clan": "πeis ∲",
-            "skin": "PsychoWolfe",
-            "use_custom_color": 1,
-            "color_body": 13631488,
-            "color_feet": 14090240,
-            "country": -1,
+            "name": config["message-analyze"].name,
+            "clan": config["message-analyze"].clan,
+            "skin": config["message-analyze"].skin,
+            "use_custom_color": config["message-analyze"].use_custom_color,
+            "color_body": config["message-analyze"].color_body,
+            "color_feet": config["message-analyze"].color_feet,
+            "country": config["message-analyze"].country,
         }
     });
 

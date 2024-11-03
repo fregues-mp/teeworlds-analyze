@@ -1,0 +1,38 @@
+{
+  "all-analyze": {
+    "name": "all-analyze",
+    "clan": "",
+    "skin": "Default",
+    "use_custom_color": 0,
+    "color_body": 0,
+    "color_feet": 0,
+    "country": -1
+  },
+  "map-analyze": {
+    "name": "map-analyze",
+    "clan": "",
+    "skin": "Default",
+    "use_custom_color": 0,
+    "color_body": 0,
+    "color_feet": 0,
+    "country": -1
+  },
+  "player-analyze": {
+    "name": "player-analyze",
+    "clan": "",
+    "skin": "Default",
+    "use_custom_color": 0,
+    "color_body": 0,
+    "color_feet": 0,
+    "country": -1
+  },
+  "message-analyze": {
+    "name": "message-analyze",
+    "clan": "",
+    "skin": "Default",
+    "use_custom_color": 0,
+    "color_body": 0,
+    "color_feet": 0,
+    "country": -1
+  }
+}

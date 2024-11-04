@@ -93,3 +93,7 @@ Thumbs.db
 # Config
 src/servers/MyServers.json
 src/config/Mybot-identify.json
+
+# Servers Logs
+
+src/bots/defalt-analyze/logs

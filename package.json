@@ -9,8 +9,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "colors": "^1.4.0",
     "teeworlds": "^2.5.4"
   },
-  "devDependencies": {},
   "keywords": []
 }

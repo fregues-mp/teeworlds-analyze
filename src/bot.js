@@ -1,6 +1,6 @@
 const colors = require('colors');
 const teeworlds = require('teeworlds');
-const config = require('../../config/bot-identify.json');
+const config = require('./config/bot-identify.json');
 const { initializeLogger, logMessage } = require('./logger');
 
 const ip = process.argv[2];
@@ -11,7 +11,7 @@ const formattedAddress = colors.black.bgWhite(`${serverName} ${ip}:${String(port
 const reconnectInterval = 5000;
 
 const originalWrite = process.stdout.write;
-const customMessage = [formattedAddress, "| ENTERED |".black.bgGray, "TRUE".black.bgGreen].join(" ");
+const customMessage = [formattedAddress, "| ENTERED: ".black.bgGray, "TRUE".green].join(" ");
 
 process.stdout.write = function (message, ...args) {
   if (typeof message === 'string' && message.includes("flushing")) {
@@ -66,12 +66,12 @@ function setupEventListeners(client) {
         const playerInfo = (` ${String(playerId)}: ${playerName} - ${playerClan} - ${playerSkin} |`);
     
         if (playerName !== undefined && msg.message !== autoReplie) {
-            console.log(formattedAddress, "| MESSAGE: ".black.bgGray, playerInfo.black.bgYellow, msg.message);
+            console.log(formattedAddress, "| MESSAGE: ".black.bgGray, playerInfo.yellow, msg.message);
             logMessage(`| MESSAGE: ${playerInfo}: ${msg.message}`);
     
             if (msg.message.match(config["default-analyze"].name) && playerName !== undefined) {
                 const autoReplyMessage = `/w ${playerName} ${autoReplie}`;
-                console.log(formattedAddress, `| REPLIED: `.black.bgGray, ` ${playerName} |`.black.bgYellow);
+                console.log(formattedAddress, `| REPLIED: `.black.bgGray, ` ${playerName} |`.yellow);
                 logMessage(`| REPLIED: ${playerName}`);
                 client.game.Say(autoReplyMessage);
             }
@@ -80,13 +80,13 @@ function setupEventListeners(client) {
         const joinMatchEnter = msg.message.match(/'(.+?)' entered and joined the game/);
         if (joinMatchEnter && playerName === undefined) {
             const playerName = joinMatchEnter[1];
-            console.log(formattedAddress, "| JOINED: ".black.bgGray, ` ${playerName} |`.black.bgYellow);
+            console.log(formattedAddress, "| JOINED: ".black.bgGray, ` ${playerName} |`.yellow);
             logMessage(`| JOINED: ${playerName} |`);
         }
         const joinMatchLeave = msg.message.match(/'(.+?)' has left the game/);
         if (joinMatchLeave && playerName === undefined) {
             const playerName = joinMatchLeave[1];
-            console.log(formattedAddress, "| DROPPED: ".black.bgGray, ` ${playerName} |`.black.bgYellow);
+            console.log(formattedAddress, "| DROPPED: ".black.bgGray, ` ${playerName} |`.yellow);
             logMessage(`| DROPPED: ${playerName} |`);
         }
 
@@ -96,19 +96,19 @@ function setupEventListeners(client) {
             mapName = voteMatch[2];
             reason = voteMatch[3];
         
-            console.log(formattedAddress, "| VOTE: ".black.bgGray, ` ${callerName} - ${mapName} - ${reason} |`.black.bgYellow);
+            console.log(formattedAddress, "| VOTE: ".black.bgGray, ` ${callerName} - ${mapName} - ${reason} |`.yellow);
             logMessage(`| VOTE: ${callerName} - ${mapName} - ${reason}`);
         }
 
         const votePassed = msg.message.match(/Vote passed/);
         if (votePassed && playerName === undefined) {
-            console.log(formattedAddress, "| VOTE: ".black.bgGray, ` ${callerName} - ${mapName} - ${reason} |`.black.bgYellow, "TRUE".black.bgGreen);
+            console.log(formattedAddress, "| VOTE: ".black.bgGray, ` ${callerName} - ${mapName} - ${reason} |`.yellow, "TRUE".green);
             logMessage("| VOTE: ", ` ${callerName} - ${mapName} - ${reason} |`, "TRUE");
         }
 
         const voteFailed = msg.message.match(/Vote failed/);
         if (voteFailed && playerName === undefined) {
-            console.log(formattedAddress, "| VOTE: ".black.bgGray, ` ${callerName} - ${mapName} - ${reason} |`.black.bgYellow, "FALSE".black.bgRed);
+            console.log(formattedAddress, "| VOTE: ".black.bgGray, ` ${callerName} - ${mapName} - ${reason} |`.yellow, "FALSE".red);
             logMessage("| VOTE: ", ` ${callerName} - ${mapName} - ${reason} |`, "FALSE");
         }
 
@@ -119,7 +119,7 @@ function setupEventListeners(client) {
         const currentMap = message.map_name;
     
         if (currentMap && currentMap !== previousMap) {
-            console.log(formattedAddress, "| MAP CHANGE: ".black.bgGray, ` ${currentMap} |`.black.bgYellow);
+            console.log(formattedAddress, "| MAP CHANGE: ".black.bgGray, ` ${currentMap} |`.yellow);
             await logMessage(`| MAP CHANGE: ${currentMap}`);
             previousMap = currentMap;
         }
@@ -158,7 +158,7 @@ process.on("SIGINT", async () => {
             try {
                 if (client && typeof client.Disconnect === 'function') {
                     await client.Disconnect();
-                    console.log(formattedAddress, "| DISCONNECTED |".black.bgGray, "TRUE".black.bgGreen);
+                    console.log(formattedAddress, "| DISCONNECTED: ".black.bgGray, "TRUE".green);
                 }
             } catch (error) {
                 console.error(`Error during disconnection: ${error.message}`);

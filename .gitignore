@@ -97,3 +97,4 @@ src/config/Mybot-identify.json
 # Servers Logs
 
 src/bots/defalt-analyze/logs
+/tests

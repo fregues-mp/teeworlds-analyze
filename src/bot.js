@@ -58,10 +58,15 @@ function setupEventListeners(client) {
         const playerId = msg.author?.Client_id || -1;
         const autoReplie = "Hi, I'm analyzing some game data, for more information check out my Github: https://github.com/fregues-mp/teeworlds-analyze";
         
-        const playerInfo = (` ${String(playerId)}: ${playerName} - ${playerClan} - ${playerSkin} |`);
-    
-        console.log(formattedAddress, "| MESSAGE: ", playerInfo, msg.message);
-        logMessage(`| MESSAGE: ${playerInfo}: ${msg.message}`);
+        const playerInfo = (` id=${String(playerId)}: name=${playerName} clan=${playerClan} skin=${playerSkin} |`);
+        if (playerName === undefined){
+            console.log(formattedAddress, "| MESSAGE: SERVER |", msg.message);
+            logMessage(`| MESSAGE: SERVER | ${msg.message}`);
+
+        } else{
+            console.log(formattedAddress, "| MESSAGE: ", playerInfo, msg.message);
+            logMessage(`| MESSAGE: ${playerInfo}: ${msg.message}`);
+        }
     
         if (msg.message.match(config["default-analyze"].name) && playerName !== undefined && playerName !== "default-analyze") {
             client.game.Say(`/w ${playerName} ${autoReplie}`);

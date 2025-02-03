@@ -14,7 +14,9 @@
    ```bash
    npm i
    ```
-4. Run
+4. Read servers/README.md
+   
+5. Run
    ```
    node multbot.js
    ```

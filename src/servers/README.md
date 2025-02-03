@@ -1,4 +1,4 @@
-edit the servers in server.json
+edit the servers in servers.json
 do not change the "servers" name of the json
 
 example:
@@ -24,4 +24,4 @@ example:
 }
 ```
 
-
+a folder will be created in log with the name of the server, and log files relevant to the ports

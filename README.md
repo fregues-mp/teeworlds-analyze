@@ -17,6 +17,10 @@ Teeworlds Analyze is a bot designed to monitor and analyze events on Teeworlds g
    ```bash
    npm i
    ```
+4. Run
+   ```
+   node multbot.js
+   ```
 
 ### Contribution
 

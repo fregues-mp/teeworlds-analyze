@@ -21,10 +21,6 @@ process.stdout.write = function (message, ...args) {
   return originalWrite.apply(process.stdout, [message, ...args]);
 };
   
-
-let callerName;
-let mapName;
-let reason;
 let previousMap = null;
 let clients = [];
 
@@ -65,52 +61,26 @@ function setupEventListeners(client) {
         
         const playerInfo = (` ${String(playerId)}: ${playerName} - ${playerClan} - ${playerSkin} |`);
     
-        if (playerName !== undefined && msg.message !== autoReplie) {
-            console.log(formattedAddress, "| MESSAGE: ".black.bgGray, playerInfo.yellow, msg.message);
-            logMessage(`| MESSAGE: ${playerInfo}: ${msg.message}`);
+        console.log(formattedAddress, "| MESSAGE: ", playerInfo, msg.message);
+        logMessage(`| MESSAGE: ${playerInfo}: ${msg.message}`);
     
-            if (msg.message.match(config["default-analyze"].name) && playerName !== undefined) {
-                const autoReplyMessage = `/w ${playerName} ${autoReplie}`;
-                console.log(formattedAddress, `| REPLIED: `.black.bgGray, ` ${playerName} |`.yellow);
-                logMessage(`| REPLIED: ${playerName}`);
-                client.game.Say(autoReplyMessage);
-            }
+        if (msg.message.match(config["default-analyze"].name) && playerName !== undefined && playerName !== "default-analyze") {
+            client.game.Say(`/w ${playerName} ${autoReplie}`);
         }
         
+        /*
         const joinMatchEnter = msg.message.match(/'(.+?)' entered and joined the game/);
         if (joinMatchEnter && playerName === undefined) {
             const playerName = joinMatchEnter[1];
-            console.log(formattedAddress, "| JOINED: ".black.bgGray, ` ${playerName} |`.yellow);
+            console.log(formattedAddress, "| JOINED: ", ` ${playerName} |`);
             logMessage(`| JOINED: ${playerName} |`);
         }
         const joinMatchLeave = msg.message.match(/'(.+?)' has left the game/);
         if (joinMatchLeave && playerName === undefined) {
             const playerName = joinMatchLeave[1];
-            console.log(formattedAddress, "| DROPPED: ".black.bgGray, ` ${playerName} |`.yellow);
+            console.log(formattedAddress, "| DROPPED: ", ` ${playerName} |`);
             logMessage(`| DROPPED: ${playerName} |`);
-        }
-
-        const voteMatch = msg.message.match(/'(.+?)' called vote to change server option 'Map: (.+?)' \((.*?)\)/);
-        if (voteMatch && playerName === undefined) {
-            callerName = voteMatch[1];
-            mapName = voteMatch[2];
-            reason = voteMatch[3];
-        
-            console.log(formattedAddress, "| VOTE: ".black.bgGray, ` ${callerName} - ${mapName} - ${reason} |`.yellow);
-            logMessage(`| VOTE: ${callerName} - ${mapName} - ${reason}`);
-        }
-
-        const votePassed = msg.message.match(/Vote passed/);
-        if (votePassed && playerName === undefined) {
-            console.log(formattedAddress, "| VOTE: ".black.bgGray, ` ${callerName} - ${mapName} - ${reason} |`.yellow, "TRUE".green);
-            logMessage("| VOTE: ", ` ${callerName} - ${mapName} - ${reason} |`, "TRUE");
-        }
-
-        const voteFailed = msg.message.match(/Vote failed/);
-        if (voteFailed && playerName === undefined) {
-            console.log(formattedAddress, "| VOTE: ".black.bgGray, ` ${callerName} - ${mapName} - ${reason} |`.yellow, "FALSE".red);
-            logMessage("| VOTE: ", ` ${callerName} - ${mapName} - ${reason} |`, "FALSE");
-        }
+        }*///
 
 
     });
@@ -119,7 +89,7 @@ function setupEventListeners(client) {
         const currentMap = message.map_name;
     
         if (currentMap && currentMap !== previousMap) {
-            console.log(formattedAddress, "| MAP CHANGE: ".black.bgGray, ` ${currentMap} |`.yellow);
+            console.log(formattedAddress, "| MAP CHANGE: ", ` ${currentMap} |`);
             await logMessage(`| MAP CHANGE: ${currentMap}`);
             previousMap = currentMap;
         }
@@ -141,7 +111,7 @@ async function reconnect(client) {
 
 async function connectClient(client) {
     try {
-        await client.connect();
+        client.connect();
     } catch (error) {
         setTimeout(() => reconnect(client), reconnectInterval);
     }

@@ -9,7 +9,6 @@
     "run": "node src/multbot.js"
   },
   "dependencies": {
-    "colors": "^1.4.0",
     "teeworlds": "^2.5.4"
   },
   "keywords": []

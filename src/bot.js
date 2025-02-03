@@ -1,4 +1,3 @@
-const colors = require('colors');
 const teeworlds = require('teeworlds');
 const config = require('./config/bot-identify.json');
 const { initializeLogger, logMessage } = require('./logger');
@@ -6,12 +5,12 @@ const { initializeLogger, logMessage } = require('./logger');
 const ip = process.argv[2];
 const port = parseInt(process.argv[3], 10);
 const serverName = process.argv[4];
-const formattedAddress = colors.black.bgWhite(`${serverName} ${ip}:${String(port)} |`);
+const formattedAddress = `${serverName} ${ip}:${String(port)} |`;
 
 const reconnectInterval = 5000;
 
 const originalWrite = process.stdout.write;
-const customMessage = [formattedAddress, "| ENTERED: ".black.bgGray, "TRUE".green].join(" ");
+const customMessage = [formattedAddress, "| ENTERED: ", "TRUE".green].join(" ");
 
 process.stdout.write = function (message, ...args) {
   if (typeof message === 'string' && message.includes("flushing")) {

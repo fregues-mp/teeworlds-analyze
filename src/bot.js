@@ -127,7 +127,7 @@ process.on("SIGINT", async () => {
             try {
                 if (client && typeof client.Disconnect === 'function') {
                     await client.Disconnect();
-                    console.log(formattedAddress, "| DISCONNECTED: ".black.bgGray, "TRUE".green);
+                    console.log(formattedAddress, "| DISCONNECTED: ", "TRUE");
                 }
             } catch (error) {
                 console.error(`Error during disconnection: ${error.message}`);
